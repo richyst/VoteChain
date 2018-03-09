@@ -52,6 +52,50 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	// ----------------*******************---------------------------------
+
+	$scope.queryAllVotes = function(){
+
+		appFactory.queryAllVotes(function(data){
+			var array = [];
+			for (var i = 0; i < data.length; i++){
+				parseInt(data[i].Key);
+				data[i].Record.Key = parseInt(data[i].Key);
+				array.push(data[i].Record);
+			}
+			array.sort(function(a, b) {
+			    return parseFloat(a.Key) - parseFloat(b.Key);
+			});
+			$scope.all_votes = array;
+		});
+	}
+
+	$scope.queryVote = function(){
+
+		var id = $scope.vote_id;
+
+		appFactory.queryVote(id, function(data){
+			$scope.query_vote = data;
+
+			if ($scope.query_vote == "Could not locate vote"){
+				console.log()
+				$("#error_query").show();
+			} else{
+				$("#error_query").hide();
+			}
+		});
+	}
+
+	$scope.recordVote = function(){
+
+		appFactory.recordVote($scope.vote, function(data){
+			$scope.create_vote = data;
+			$("#success_create").show();
+		});
+	}
+
+	// --------------------------------***************************************
+
 	$scope.changeHolder = function(){
 
 		appFactory.changeHolder($scope.owner, function(data){
@@ -96,6 +140,33 @@ app.factory('appFactory', function($http){
 			callback(output)
 		});
 	}
+
+	//-------------------------------------------------------------
+
+	factory.queryAllVotes = function(callback){
+
+    	$http.get('/get_all_votes/').success(function(output){
+			callback(output)
+		});
+	}
+
+	factory.queryVote = function(id, callback){
+    	$http.get('/get_vote/' + id).success(function(output){
+			callback(output)
+		});
+	}
+
+	factory.recordVote = function(data, callback){
+
+		var vote = data.id + "-" + data.codigo + "-" + data.eleccion + "-" + data.entidad + "-" + data.distrito
+			+ "-" + data.municipio + "-" + data.seccion + "-" + data.localidad;
+
+    	$http.get('/add_vote/' + vote).success(function(output){
+			callback(output)
+		});
+	}
+
+	//--------------------------------------------------------
 
 	factory.changeHolder = function(data, callback){
 

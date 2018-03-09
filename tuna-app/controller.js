@@ -19,8 +19,9 @@ var os            = require('os');
 
 module.exports = (function() {
 return{
-	get_all_tuna: function(req, res){
-		console.log("getting all tuna from database: ");
+
+	get_all_votes: function(req, res){
+		console.log("getting all votes from database: ");
 
 		var fabric_client = new Fabric_Client();
 
@@ -61,7 +62,7 @@ return{
 		    const request = {
 		        chaincodeId: 'tuna-app',
 		        txId: tx_id,
-		        fcn: 'queryAllTuna',
+		        fcn: 'queryAllVotes',
 		        args: ['']
 		    };
 
@@ -84,17 +85,21 @@ return{
 		    console.error('Failed to query successfully :: ' + err);
 		});
 	},
-	add_tuna: function(req, res){
-		console.log("submit recording of a tuna catch: ");
 
-		var array = req.params.tuna.split("-");
+
+	add_vote: function(req, res){
+		console.log("submit recording of a vote: ");
+		var array = req.params.vote.split("-");
 		console.log(array);
 
 		var key = array[0]
-		var timestamp = array[2]
-		var location = array[1]
-		var vessel = array[4]
-		var owner = array[3]
+		var codigo = array[1]
+		var eleccion = array[2]
+		var entidad = array[3]
+		var distrito = array[4]
+		var municipio = array[5]
+		var seccion = array[6]
+		var localidad = array[7]
 
 
 		var fabric_client = new Fabric_Client();
@@ -142,8 +147,8 @@ return{
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'tuna-app',
-		        fcn: 'recordTuna',
-		        args: [key, vessel, location, timestamp, owner],
+		        fcn: 'recordVote',
+		        args: [key, codigo, eleccion, entidad, distrito, municipio, seccion, localidad],
 		        chainId: 'mychannel',
 		        txId: tx_id
 		    };
@@ -243,7 +248,9 @@ return{
 		    console.error('Failed to invoke successfully :: ' + err);
 		});
 	},
-	get_tuna: function(req, res){
+
+
+	get_vote: function(req, res){
 
 		var fabric_client = new Fabric_Client();
 		var key = req.params.id
@@ -285,7 +292,7 @@ return{
 		    const request = {
 		        chaincodeId: 'tuna-app',
 		        txId: tx_id,
-		        fcn: 'queryTuna',
+		        fcn: 'queryVote',
 		        args: [key]
 		    };
 
@@ -312,6 +319,9 @@ return{
 		    res.send("Could not locate tuna")
 		});
 	},
+
+	//-----------------------------------------------------------------------------
+
 	change_holder: function(req, res){
 		console.log("changing holder of tuna catch: ");
 
