@@ -130,6 +130,39 @@
       </table>
 
       <div class="form-group">
+        <label>Query Votes By Eleccion</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Vote Choice</h5>
+        
+        Enter a vote choice: <input id="createName" class="form-control" type="text" placeholder="Ex: AMLO" ng-model="vote_eleccion">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryVotesByEleccion()">
+      </div>
+
+      <table id="query_vote_eleccion" class="table" align="center">
+
+        <tr>
+          <th>ID</th>
+          <th>Codigo</th>
+          <th>Eleccion</th>
+          <th>Entidad</th>
+          <th>Distrito</th>
+          <th>Municipio</th>
+          <th>Seccion</th>
+          <th>Localidad</th>
+        </tr>
+
+        <tr ng-repeat="vote in query_vote_eleccion">
+          <td>{{vote.Key}}</td>
+          <td>{{vote.codigo}}</td>
+          <td>{{vote.eleccion}}</td>
+          <td>{{vote.entidad}}</td>
+          <td>{{vote.distrito}}</td>
+          <td>{{vote.municipio}}</td>
+          <td>{{vote.seccion}}</td>
+          <td>{{vote.localidad}}</td>
+        </tr>
+      </table>
+
+      <div class="form-group">
         <label>Create Vote Record</label>
         <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_vote}}</h5>
         <br>

@@ -12,45 +12,45 @@ app.controller('appController', function($scope, appFactory){
 	$("#error_holder").hide();
 	$("#error_query").hide();
 	
-	$scope.queryAllTuna = function(){
+	// $scope.queryAllTuna = function(){
 
-		appFactory.queryAllTuna(function(data){
-			var array = [];
-			for (var i = 0; i < data.length; i++){
-				parseInt(data[i].Key);
-				data[i].Record.Key = parseInt(data[i].Key);
-				array.push(data[i].Record);
-			}
-			array.sort(function(a, b) {
-			    return parseFloat(a.Key) - parseFloat(b.Key);
-			});
-			$scope.all_tuna = array;
-		});
-	}
+	// 	appFactory.queryAllTuna(function(data){
+	// 		var array = [];
+	// 		for (var i = 0; i < data.length; i++){
+	// 			parseInt(data[i].Key);
+	// 			data[i].Record.Key = parseInt(data[i].Key);
+	// 			array.push(data[i].Record);
+	// 		}
+	// 		array.sort(function(a, b) {
+	// 		    return parseFloat(a.Key) - parseFloat(b.Key);
+	// 		});
+	// 		$scope.all_tuna = array;
+	// 	});
+	// }
 
-	$scope.queryTuna = function(){
+	// $scope.queryTuna = function(){
 
-		var id = $scope.tuna_id;
+	// 	var id = $scope.tuna_id;
 
-		appFactory.queryTuna(id, function(data){
-			$scope.query_tuna = data;
+	// 	appFactory.queryTuna(id, function(data){
+	// 		$scope.query_tuna = data;
 
-			if ($scope.query_tuna == "Could not locate tuna"){
-				console.log()
-				$("#error_query").show();
-			} else{
-				$("#error_query").hide();
-			}
-		});
-	}
+	// 		if ($scope.query_tuna == "Could not locate tuna"){
+	// 			console.log()
+	// 			$("#error_query").show();
+	// 		} else{
+	// 			$("#error_query").hide();
+	// 		}
+	// 	});
+	// }
 
-	$scope.recordTuna = function(){
+	// $scope.recordTuna = function(){
 
-		appFactory.recordTuna($scope.tuna, function(data){
-			$scope.create_tuna = data;
-			$("#success_create").show();
-		});
-	}
+	// 	appFactory.recordTuna($scope.tuna, function(data){
+	// 		$scope.create_tuna = data;
+	// 		$("#success_create").show();
+	// 	});
+	// }
 
 	// ----------------*******************---------------------------------
 
@@ -86,6 +86,32 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	$scope.queryVotesByEleccion = function(){
+
+		var eleccion = $scope.vote_eleccion;
+
+		appFactory.queryVotesByEleccion(eleccion, function(data){
+			var array = [];
+			for (var i = 0; i < data.length; i++){
+				parseInt(data[i].Key);
+				data[i].Record.Key = parseInt(data[i].Key);
+				array.push(data[i].Record);
+			}
+			array.sort(function(a, b) {
+			    return parseFloat(a.Key) - parseFloat(b.Key);
+			});
+
+			$scope.query_vote_eleccion = array;
+
+			if ($scope.query_vote_eleccion == "Could not locate votes"){
+				console.log()
+				$("#error_query").show();
+			} else{
+				$("#error_query").hide();
+			}
+		});
+	}
+
 	$scope.recordVote = function(){
 
 		appFactory.recordVote($scope.vote, function(data){
@@ -96,19 +122,19 @@ app.controller('appController', function($scope, appFactory){
 
 	// --------------------------------***************************************
 
-	$scope.changeHolder = function(){
+	// $scope.changeHolder = function(){
 
-		appFactory.changeHolder($scope.owner, function(data){
-			$scope.change_holder = data;
-			if ($scope.change_holder == "Error: no tuna catch found"){
-				$("#error_holder").show();
-				$("#success_holder").hide();
-			} else{
-				$("#success_holder").show();
-				$("#error_holder").hide();
-			}
-		});
-	}
+	// 	appFactory.changeHolder($scope.owner, function(data){
+	// 		$scope.change_holder = data;
+	// 		if ($scope.change_holder == "Error: no tuna catch found"){
+	// 			$("#error_holder").show();
+	// 			$("#success_holder").hide();
+	// 		} else{
+	// 			$("#success_holder").show();
+	// 			$("#error_holder").hide();
+	// 		}
+	// 	});
+	// }
 
 });
 
@@ -117,29 +143,29 @@ app.factory('appFactory', function($http){
 	
 	var factory = {};
 
-    factory.queryAllTuna = function(callback){
+    // factory.queryAllTuna = function(callback){
 
-    	$http.get('/get_all_tuna/').success(function(output){
-			callback(output)
-		});
-	}
+    // 	$http.get('/get_all_tuna/').success(function(output){
+	// 		callback(output)
+	// 	});
+	// }
 
-	factory.queryTuna = function(id, callback){
-    	$http.get('/get_tuna/'+id).success(function(output){
-			callback(output)
-		});
-	}
+	// factory.queryTuna = function(id, callback){
+    // 	$http.get('/get_tuna/'+id).success(function(output){
+	// 		callback(output)
+	// 	});
+	// }
 
-	factory.recordTuna = function(data, callback){
+	// factory.recordTuna = function(data, callback){
 
-		data.location = data.longitude + ", "+ data.latitude;
+	// 	data.location = data.longitude + ", "+ data.latitude;
 
-		var tuna = data.id + "-" + data.location + "-" + data.timestamp + "-" + data.owner + "-" + data.vessel;
+	// 	var tuna = data.id + "-" + data.location + "-" + data.timestamp + "-" + data.owner + "-" + data.vessel;
 
-    	$http.get('/add_tuna/'+tuna).success(function(output){
-			callback(output)
-		});
-	}
+    // 	$http.get('/add_tuna/'+tuna).success(function(output){
+	// 		callback(output)
+	// 	});
+	// }
 
 	//-------------------------------------------------------------
 
@@ -156,6 +182,12 @@ app.factory('appFactory', function($http){
 		});
 	}
 
+	factory.queryVotesByEleccion = function(eleccion, callback){
+    	$http.get('/get_by_eleccion/' + eleccion).success(function(output){
+			callback(output)
+		});
+	}
+
 	factory.recordVote = function(data, callback){
 
 		var vote = data.id + "-" + data.codigo + "-" + data.eleccion + "-" + data.entidad + "-" + data.distrito
@@ -168,14 +200,14 @@ app.factory('appFactory', function($http){
 
 	//--------------------------------------------------------
 
-	factory.changeHolder = function(data, callback){
+	// factory.changeHolder = function(data, callback){
 
-		var owner = data.id + "-" + data.name;
+	// 	var owner = data.id + "-" + data.name;
 
-    	$http.get('/change_holder/' + owner).success(function(output){
-			callback(output)
-		});
-	}
+    // 	$http.get('/change_holder/' + owner).success(function(output){
+	// 		callback(output)
+	// 	});
+	// }
 
 	return factory;
 });

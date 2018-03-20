@@ -23,6 +23,10 @@ module.exports = function(app){
     tuna.get_vote(req, res);
   });
 
+  app.get('/get_by_eleccion/:eleccion', function(req, res){
+    tuna.get_by_eleccion(req, res);
+  });
+
   app.get('/add_vote/:vote', function(req, res){
     tuna.add_vote(req, res);
   });
@@ -30,6 +34,5 @@ module.exports = function(app){
   app.get('/get_all_votes', function(req, res){
     tuna.get_all_votes(req, res);
   });
-
 
 }
