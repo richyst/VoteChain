@@ -83,8 +83,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.queryVote(APIstub, args)
 	} else if function == "queryAllVotes" {
 		return s.queryAllVotes(APIstub)
-	} else if function == "queryVotesByEleccion" {
-		return s.queryVotesByEleccion(APIstub, args)
+	} else if function == "queryVotesByDomain" {
+		return s.queryVotesByDomain(APIstub, args)
 	}
 
 	// if function == "queryTuna" {
@@ -138,15 +138,16 @@ func (s *SmartContract) queryVote(APIstub shim.ChaincodeStubInterface, args []st
 	return shim.Success(voteAsBytes)
 }
 
-func (s *SmartContract) queryVotesByEleccion(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) queryVotesByDomain(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) < 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	// eleccion := strings.ToLower(args[0])
+	searchDomain := args[0]
+	param := args[1]
 
-	queryString := fmt.Sprintf("{\"selector\":{\"eleccion\":\"%s\"}}", args[0])
+	queryString := fmt.Sprintf("{\"selector\":{\"%s\":\"%s\"}}", searchDomain, param)
 
 	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
 	if err != nil {

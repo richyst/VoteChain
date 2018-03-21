@@ -133,11 +133,14 @@
         <label>Query Votes By Eleccion</label><br>
         <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Vote Choice</h5>
         
-        Enter a vote choice: <input id="createName" class="form-control" type="text" placeholder="Ex: AMLO" ng-model="vote_eleccion">
-        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryVotesByEleccion()">
+        Enter a domain for search: <input id="createName" class="form-control" type="text" placeholder="Ex: eleccion" ng-model="search.factorBusqueda">
+        <hr>
+        Enter a value: <input id="createName" class="form-control" type="text" placeholder="Ex: AMLO" ng-model="search.parametro">
+
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryVotesByDomain()">
       </div>
 
-      <table id="query_vote_eleccion" class="table" align="center">
+      <table id="query_vote_domain" class="table" align="center">
 
         <tr>
           <th>ID</th>
@@ -150,7 +153,7 @@
           <th>Localidad</th>
         </tr>
 
-        <tr ng-repeat="vote in query_vote_eleccion">
+        <tr ng-repeat="vote in query_vote_domain">
           <td>{{vote.Key}}</td>
           <td>{{vote.codigo}}</td>
           <td>{{vote.eleccion}}</td>

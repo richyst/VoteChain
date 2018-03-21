@@ -23,8 +23,8 @@ module.exports = function(app){
     tuna.get_vote(req, res);
   });
 
-  app.get('/get_by_eleccion/:eleccion', function(req, res){
-    tuna.get_by_eleccion(req, res);
+  app.get('/get_by_domain/:search', function(req, res){
+    tuna.get_by_domain(req, res);
   });
 
   app.get('/add_vote/:vote', function(req, res){

@@ -320,10 +320,14 @@ return{
 		});
 	},
 
-	get_by_eleccion: function(req, res){
+	get_by_domain: function(req, res){
 
 		var fabric_client = new Fabric_Client();
-		var key = req.params.eleccion
+		var array = req.params.search.split("-");
+		console.log(array);
+
+		var searchDomain = array[0]
+		var param = array[1]
 
 		// setup the fabric network
 		var channel = fabric_client.newChannel('mychannel');
@@ -362,8 +366,8 @@ return{
 		    const request = {
 		        chaincodeId: 'tuna-app',
 		        txId: tx_id,
-		        fcn: 'queryVotesByEleccion',
-		        args: [key]
+		        fcn: 'queryVotesByDomain',
+		        args: [searchDomain, param]
 		    };
 
 		    // send the query proposal to the peer

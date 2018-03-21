@@ -86,11 +86,11 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
-	$scope.queryVotesByEleccion = function(){
+	$scope.queryVotesByDomain = function(){
 
-		var eleccion = $scope.vote_eleccion;
+		// var eleccion = $scope.vote_eleccion;
 
-		appFactory.queryVotesByEleccion(eleccion, function(data){
+		appFactory.queryVotesByDomain($scope.search, function(data){
 			var array = [];
 			for (var i = 0; i < data.length; i++){
 				parseInt(data[i].Key);
@@ -101,9 +101,9 @@ app.controller('appController', function($scope, appFactory){
 			    return parseFloat(a.Key) - parseFloat(b.Key);
 			});
 
-			$scope.query_vote_eleccion = array;
+			$scope.query_vote_domain = array;
 
-			if ($scope.query_vote_eleccion == "Could not locate votes"){
+			if ($scope.query_vote_domain == "Could not locate votes"){
 				console.log()
 				$("#error_query").show();
 			} else{
@@ -182,8 +182,11 @@ app.factory('appFactory', function($http){
 		});
 	}
 
-	factory.queryVotesByEleccion = function(eleccion, callback){
-    	$http.get('/get_by_eleccion/' + eleccion).success(function(output){
+	factory.queryVotesByDomain = function(data, callback){
+
+		var search = data.factorBusqueda + "-" + data.parametro;
+
+    	$http.get('/get_by_domain/' + search).success(function(output){
 			callback(output)
 		});
 	}
