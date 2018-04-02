@@ -12,11 +12,13 @@ var Fabric_Client = require('fabric-client');
 var path          = require('path');
 var util          = require('util');
 var os            = require('os');
+var cors = require('cors');
 
 // Load all of our middleware
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 // app.use(express.static(__dirname + '/client'));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,6 +30,7 @@ require('./routes.js')(app);
 
 // set up a static file server that points to the "client" directory
 app.use(express.static(path.join(__dirname, './client')));
+
 
 // Save our port
 var port = process.env.PORT || 8000;

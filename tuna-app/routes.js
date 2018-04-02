@@ -1,9 +1,10 @@
 //SPDX-License-Identifier: Apache-2.0
 
 var tuna = require('./controller.js');
+var cors = require('cors');
 
 module.exports = function(app){
-
+  app.use(cors());
   app.get('/get_tuna/:id', function(req, res){
     tuna.get_tuna(req, res);
   });
