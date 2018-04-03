@@ -89,7 +89,7 @@ return{
 
 	add_vote: function(req, res){
 		console.log("submit recording of a vote: ");
-		var array = req.params.vote.split("-");
+		var array = req.params.vote.split("_");
 		console.log(array);
 
 		var key = array[0]
@@ -240,7 +240,7 @@ return{
 
 		    if(results && results[1] && results[1].event_status === 'VALID') {
 		        console.log('Successfully committed the change to the ledger by the peer');
-		        res.send(tx_id.getTransactionID());
+		        // res.send(tx_id.getTransactionID());
 		    } else {
 		        console.log('Transaction failed to be committed to the ledger due to ::'+results[1].event_status);
 		    }
