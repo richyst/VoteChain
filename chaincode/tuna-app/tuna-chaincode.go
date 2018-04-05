@@ -304,8 +304,8 @@ This method does not take any arguments. Returns JSON string containing results.
 */
 func (s *SmartContract) queryAllVotes(APIstub shim.ChaincodeStubInterface) sc.Response {
 
-	startKey := "0"
-	endKey := "999"
+	startKey := ""
+	endKey := ""
 
 	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
 	if err != nil {
