@@ -323,7 +323,7 @@ return{
 	get_by_domain: function(req, res){
 
 		var fabric_client = new Fabric_Client();
-		var array = req.params.search.split("-");
+		var array = req.params.search.split("_");
 		console.log(array);
 
 		var searchDomain = array[0]
